@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>斗球 · 资料整理与信息索引</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f7fafc;
+      color: #1f2d3a;
+      line-height: 1.7;
+      padding: 2rem 1.2rem;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* 网格卡片背景 */
+    .grid-bg {
+      position: relative;
+    }
+
+    .grid-bg::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        linear-gradient(rgba(43, 139, 136, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(43, 139, 136, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .grid-bg > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 页面头部 */
+    .page-header {
+      text-align: center;
+      padding: 2.8rem 0 1.2rem 0;
+    }
+
+    .page-header h1 {
+      font-size: 2.4rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #1b4332;
+      margin-bottom: 0.35rem;
+    }
+
+    .page-header .sub {
+      font-size: 1rem;
+      color: #53756b;
+      border-bottom: 2px solid #b7d5d0;
+      display: inline-block;
+      padding-bottom: 0.25rem;
+    }
+
+    /* 文章卡片 */
+    .article-card {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 2.2rem 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 4px 16px rgba(0, 40, 40, 0.04);
+      border: 1px solid #deece8;
+      transition: box-shadow 0.2s;
+    }
+
+    .article-card:hover {
+      box-shadow: 0 8px 28px rgba(31, 78, 75, 0.06);
+    }
+
+    .card-title {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #1b4332;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .card-meta {
+      font-size: 0.9rem;
+      color: #62877b;
+      margin-bottom: 1.4rem;
+      border-left: 4px solid #3b9b92;
+      padding-left: 0.75rem;
+      background: #e8f3f0;
+      display: inline-block;
+      border-radius: 0 8px 8px 0;
+      line-height: 1.6;
+      padding: 0.2rem 1rem 0.2rem 0.9rem;
+    }
+
+    .card-body p {
+      margin-bottom: 1.2rem;
+      text-align: justify;
+    }
+
+    .card-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 引用提示块 */
+    .insight-block {
+      background: #ecf7f4;
+      border-left: 5px solid #2b8b88;
+      border-radius: 0 16px 16px 0;
+      padding: 1.2rem 1.8rem;
+      margin: 1.8rem 0;
+      color: #1d3e38;
+      font-style: normal;
+    }
+
+    .insight-block strong {
+      color: #146b62;
+      font-weight: 600;
+    }
+
+    /* 场景列表 */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin: 1.6rem 0;
+    }
+
+    .feature-item {
+      background: #f5fcf9;
+      padding: 1rem 1.2rem;
+      border-radius: 14px;
+      border: 1px solid #cfe3dd;
+      transition: background 0.15s;
+    }
+
+    .feature-item:hover {
+      background: #e1f2ed;
+    }
+
+    .feature-item span {
+      display: inline-block;
+      background: #2b8b88;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 30px;
+      text-align: center;
+      line-height: 24px;
+      font-size: 0.75rem;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    .feature-item strong {
+      color: #1b5e55;
+    }
+
+    /* 提示 / faq 摘要 */
+    .faq-summary {
+      background: #ffffff;
+      border: 1px solid #cde0db;
+      border-radius: 18px;
+      padding: 1.2rem 1.6rem;
+      margin: 2rem 0 1rem 0;
+    }
+
+    .faq-summary h3 {
+      font-size: 1.2rem;
+      color: #1b4332;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .faq-summary h3::before {
+      content: "❓";
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+
+    .faq-summary ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .faq-summary li {
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed #d3e5df;
+      font-size: 0.98rem;
+    }
+
+    .faq-summary li:last-child {
+      border-bottom: none;
+    }
+
+    .faq-summary li strong {
+      color: #2a7068;
+    }
+
+    /* 访问句 */
+    .visit-line {
+      margin: 2.2rem 0 1rem 0;
+      padding: 1.2rem 0;
+      text-align: center;
+      border-top: 1px solid #c7dbd5;
+      border-bottom: 1px solid #c7dbd5;
+      font-size: 1.05rem;
+    }
+
+    .visit-line a {
+      color: #1f6d62;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 2px solid #93c5be;
+      padding-bottom: 2px;
+      transition: border-color 0.15s;
+    }
+
+    .visit-line a:hover {
+      border-bottom-color: #1f6d62;
+    }
+
+    /* 底部 */
+    .footer-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #6f8f86;
+      margin-top: 3rem;
+      padding: 1rem 0 2rem 0;
+      border-top: 1px solid #dae8e3;
+      letter-spacing: 0.3px;
+    }
+
+    /* 移动端调整 */
+    @media (max-width: 640px) {
+      body {
+        padding: 1.2rem 0.9rem;
+      }
+
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .article-card {
+        padding: 1.6rem 1.2rem;
+        border-radius: 16px;
+      }
+
+      .card-title {
+        font-size: 1.3rem;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+      }
+
+      .feature-item {
+        padding: 0.8rem 1rem;
+      }
+
+      .insight-block {
+        padding: 1rem 1.2rem;
+      }
+
+      .faq-summary {
+        padding: 1rem 1.2rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .page-header h1 {
+        font-size: 1.5rem;
+      }
+      .card-meta {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container grid-bg">
+  <!-- 页面头 -->
+  <header class="page-header">
+    <h1>整理的线索 · 信息索引</h1>
+    <div class="sub">从资料碎片到有序网络</div>
+  </header>
+
+  <!-- 主文章卡片 1: 引子 + 段落 -->
+  <article class="article-card">
+    <h2 class="card-title">从零散的文档到可检索的集合</h2>
+    <div class="card-meta">📂 资料整理 · 2025</div>
+    <div class="card-body">
+      <p>每天都有新的链接、截图、摘录散落在不同设备里。如果不加梳理，再多的收藏也只是一堆沉默的数字。去年我开始用标签 + 双向链接的方式重构个人知识库，发现真正关键的不是工具，而是决定「哪些内容值得被索引」。在反复筛选的过程中，<a href="https://home-index-douqiu.com">斗球</a> 逐渐成为我常用的信息锚点——它的内容组织方式给了我不少启发。</p>
+      <p>一个干净的资料库往往遵循相似的逻辑：主题明确、层级克制、更新有节奏。我习惯把每个主题拆成三个层次——原始素材、提炼笔记、以及可供分享的索引卡片。这样做的好处是，无论半年后还是两年后，重新打开都能快速定位到当初的思考路径。</p>
+    </div>
+  </article>
+
+  <!-- 卡片 2: 引入引用提示 + 特点网格 -->
+  <article class="article-card">
+    <h2 class="card-title">索引的价值在于连接</h2>
+    <div class="card-meta">🔗 信息节点 · 整理手记</div>
+    <div class="card-body">
+      <p>单条笔记是孤岛，索引才是桥梁。我注意到很多人在整理时只关注「存了什么」，却忽略了「和什么有关」。一个好的索引应该能回答三个问题：这条信息来自哪里？它和其他资料有什么关联？我当初为什么觉得它重要？</p>
+
+      <div class="insight-block">
+        <strong>💡 整理提示：</strong> 为每篇资料设定 2~3 个关联标签，比一个复杂的分类体系更灵活。标签之间的交叉，会自然生长出新的主题。
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-item"><span>①</span> <strong>主题卡片</strong> —— 每个主题一张独立索引页</div>
+        <div class="feature-item"><span>②</span> <strong>时间戳</strong> —— 记录整理日期与来源链接</div>
+        <div class="feature-item"><span>③</span> <strong>简短摘要</strong> —— 两句话概括核心信息</div>
+        <div class="feature-item"><span>④</span> <strong>关联跳转</strong> —— 指向相关笔记或外部参考</div>
+      </div>
+
+      <p>这些原则看起来简单，但坚持下来的人并不多。我也曾陷入「整理癖」——把大量时间花在格式和美观上，反而忽略内容本身。后来我学会只问一个问题：如果一年后看到这个页面，我能立刻理解它的用途吗？</p>
+    </div>
+  </article>
+
+  <!-- 卡片 3: 从场景切入 + FAQ 摘要 -->
+  <article class="article-card">
+    <h2 class="card-title">几个真实的索引场景</h2>
+    <div class="card-meta">📋 使用片段 · 非虚构</div>
+    <div class="card-body">
+      <p>朋友小杨在整理行业研究报告时，会把每份 PDF 的结论单独摘录成卡片，再关联到「政策」「技术」「市场」三个标签下。几个月后他需要查找某个细分数据，只用了两次点击就找到了原始出处。另一位同事习惯用纯文本文件管理自己的书签，每一条链接附上一句话说明，他说这比任何收藏夹都好用。</p>
+      <p>这些场景让我反思：有效的索引并不需要复杂架构。有时候一张卡片、一个命名规则、一条清晰的引用路径，就已经足够。</p>
+
+      <div class="faq-summary">
+        <h3>索引常见疑问</h3>
+        <ul>
+          <li><strong>需要为每条资料打分吗？</strong> 不必。只标记「有用」「待复核」「已归档」三态即可。</li>
+          <li><strong>如何避免索引变成另一个杂乱文件夹？</strong> 每月花十分钟清理孤立节点，删除无关联的条目。</li>
+          <li><strong>要不要统一格式？</strong> 统一日期格式和标题样式就够，不要过度美化。</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- 访问句 —— 嵌入链接，自然融入文本 -->
+  <div class="visit-line">
+    如果你也在找一种更温和的资料整理方式，不妨看看 <a href="https://home-index-douqiu.com">斗球</a> 的信息组织风格，也许能带来一些灵感。
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="footer-note">
+    资料整理手记 · 基于个人实践 · 不构成任何建议
+  </footer>
+</div>
+</body>
+</html>
